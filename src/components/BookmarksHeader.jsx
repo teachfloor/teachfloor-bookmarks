@@ -11,7 +11,7 @@ import { BookmarkIcon, PlusIcon, CloseIcon } from './Icons'
  *   - already saved  → filled bookmark (visual cue, still opens panel for remove)
  *   - otherwise      → `+`
  */
-const BookmarksHeader = ({ count, loading, adding, isBookmarked, accentColor, onToggle }) => {
+const BookmarksHeader = ({ count, loading, adding, isBookmarked, isSupported = true, accentColor, onToggle }) => {
   const renderIcon = () => {
     if (adding) return <CloseIcon color="#64748b" />
     if (isBookmarked) return <BookmarkIcon color={accentColor} filled />
@@ -25,7 +25,7 @@ const BookmarksHeader = ({ count, loading, adding, isBookmarked, accentColor, on
       : 'Bookmark this page'
 
   return (
-    <Group position="apart" px={2}>
+    <Group position="apart" mih={28} px={2}>
       <Group spacing={4}>
         <Text size="xs" fw={500} tt="uppercase" c="dimmed">
           Bookmarks
@@ -37,17 +37,19 @@ const BookmarksHeader = ({ count, loading, adding, isBookmarked, accentColor, on
           </Group>
         )}
       </Group>
-      <Tooltip label={tooltip}>
-        <Button
-          size="xs"
-          variant="default"
-          onClick={onToggle}
-          h="auto"
-          p={6}
-        >
-          {renderIcon()}
-        </Button>
-      </Tooltip>
+      {isSupported && (
+        <Tooltip label={tooltip}>
+          <Button
+            size="xs"
+            variant="default"
+            onClick={onToggle}
+            h="auto"
+            p={6}
+          >
+            {renderIcon()}
+          </Button>
+        </Tooltip>
+      )}
     </Group>
   )
 }

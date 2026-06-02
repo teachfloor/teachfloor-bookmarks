@@ -21,3 +21,11 @@ export const TYPES = {
 export const FALLBACK_TYPE = { label: 'Page', color: '#64748b' }
 
 export const typeOf = (viewport) => TYPES[viewport] || FALLBACK_TYPE
+
+/**
+ * Whether the current viewport can accept a new bookmark. The app
+ * mounts on every dashboard viewport (via the wildcard view in the
+ * manifest), but only the ones in `TYPES` get the "save this page"
+ * affordance — the rest see the list without the `+` button.
+ */
+export const isSupportedViewport = (viewport) => Boolean(TYPES[viewport])

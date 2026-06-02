@@ -16,7 +16,7 @@ import BookmarkRow from '../components/BookmarkRow'
 import EmptyState from '../components/EmptyState'
 import { openInCurrentTab, openInNewTab } from '../utils/navigation'
 import { buildDefaultLabel, buildContext } from '../utils/labels'
-import { typeOf } from '../utils/types'
+import { typeOf, isSupportedViewport } from '../utils/types'
 
 const COLLECTION_KEY = 'bookmarks'
 
@@ -77,6 +77,16 @@ const BookmarksView = () => {
   const currentBookmark = items.find((it) => it.value?.path === environment.path)
   const isBookmarked = Boolean(currentBookmark)
   const currentType = typeOf(environment.viewport)
+  const supported = isSupportedViewport(environment.viewport)
+
+  /**
+   * If the user navigates to a viewport we don't support while the
+   * panel is open, drop them back to the list — there's no `+` button
+   * to dismiss it from, and the panel itself isn't meaningful here.
+   */
+  useEffect(() => {
+    if (!supported && adding) setAdding(false)
+  }, [supported, adding])
 
   const handleSave = async () => {
     if (busy || isBookmarked) return
@@ -125,6 +135,7 @@ const BookmarksView = () => {
           loading={loading}
           adding={adding}
           isBookmarked={isBookmarked}
+          isSupported={supported}
           accentColor={currentType.color}
           onToggle={() => setAdding((v) => !v)}
         />
