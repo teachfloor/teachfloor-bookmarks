@@ -12,10 +12,16 @@ import { BookmarkIcon, PlusIcon, CloseIcon } from './Icons'
  *   - otherwise      → `+`
  */
 const BookmarksHeader = ({ count, loading, adding, isBookmarked, isSupported = true, accentColor, onToggle }) => {
+  /**
+   * Icons default to `currentColor`, which inherits the Button's text
+   * color — Mantine flips that automatically between light/dark mode
+   * for the `variant="default"` button below. We only pass an explicit
+   * color when we want the bookmark accent (the saved-state cue).
+   */
   const renderIcon = () => {
-    if (adding) return <CloseIcon color="#64748b" />
+    if (adding) return <CloseIcon />
     if (isBookmarked) return <BookmarkIcon color={accentColor} filled />
-    return <PlusIcon color="#0f172a" />
+    return <PlusIcon />
   }
 
   const tooltip = adding

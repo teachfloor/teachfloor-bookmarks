@@ -10,12 +10,18 @@ const TypePill = ({ viewport }) => {
       variant="light"
       size="xs"
       radius="xl"
-      styles={{
+      styles={(theme) => ({
         root: {
-          backgroundColor: `${color}14`,
+          /**
+           * Tint the pill with the type's accent color. Light mode
+           * gets ~8% alpha (subtle on a near-white surface); dark mode
+           * gets ~22% alpha so the pill stays legible against the dark
+           * card background. Hex suffix is the alpha byte (00–FF).
+           */
+          backgroundColor: `${color}${theme.colorScheme === 'dark' ? '38' : '14'}`,
           color,
         },
-      }}
+      })}
     >
       {label}
     </Badge>

@@ -69,12 +69,18 @@ const AddBookmarkPanel = ({
             onChange={(e) => onLabelChange(e.currentTarget.value)}
             disabled={busy}
             autoFocus
-            styles={{
+            styles={(theme) => ({
               input: {
-                background: '#fff',
+                /**
+                 * Drop the hardcoded white background — in dark mode
+                 * we want the input to read as a darker surface inside
+                 * the type-tinted panel. The border keeps its accent
+                 * tint at 25% alpha in both schemes.
+                 */
+                background: theme.colorScheme === 'dark' ? theme.colors.dark[7] : '#fff',
                 borderColor: `${type.color}40`,
               },
-            }}
+            })}
           />
           <Group position="apart" spacing="xs">
             <TypePill viewport={viewport} />

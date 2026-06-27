@@ -24,27 +24,33 @@ const BookmarkRow = ({
       tabIndex={0}
       onClick={() => onOpen(path)}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(path) } }}
-      sx={(theme) => ({
-        padding: '10px 12px',
-        borderRadius: 8,
-        background: theme.white,
-        border: `1px solid ${isCurrent ? accentColor : theme.colors.gray[2]}`,
-        boxShadow: `inset 0 0 0 1px ${isCurrent ? accentColor : 'transparent'}`,
-        cursor: 'pointer',
-        transition: 'transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease',
-        '&:hover': {
-          borderColor: isCurrent ? accentColor : theme.colors.gray[4],
-          // boxShadow: '0 1px 2px rgba(15, 23, 42, 0.06)',
-          // transform: 'translateY(-1px)',
-        },
-      })}
+      sx={(theme) => {
+        const dark = theme.colorScheme === 'dark'
+        return ({
+          padding: '10px 12px',
+          borderRadius: 8,
+          background: dark ? theme.colors.dark[6] : theme.white,
+          border: `1px solid ${isCurrent ? accentColor : (dark ? theme.colors.dark[5] : theme.colors.gray[2])}`,
+          boxShadow: `inset 0 0 0 1px ${isCurrent ? accentColor : 'transparent'}`,
+          cursor: 'pointer',
+          transition: 'transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease',
+          '&:hover': {
+            borderColor: isCurrent ? accentColor : (dark ? theme.colors.dark[4] : theme.colors.gray[4]),
+          },
+        })
+      }}
     >
       <Group position="apart" spacing="xs" noWrap align="flex-start">
         <Stack spacing={2} style={{ flex: 1, minWidth: 0 }}>
           <Group spacing={6} mb={2}>
             <TypePill viewport={viewport} />
           </Group>
-          <Text size="sm" fw={600} lineClamp={1} style={{ color: '#0f172a' }}>
+          {/**
+           * Drop the hardcoded `#0f172a` so Mantine Text picks up its
+           * theme-driven default (near-black on light, near-white on
+           * dark). Keep weight/clamp the same.
+           */}
+          <Text size="sm" fw={600} lineClamp={1}>
             {label || typeOf(viewport).label}
           </Text>
           {context ? (
