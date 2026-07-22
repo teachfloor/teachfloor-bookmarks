@@ -4,7 +4,7 @@ import { typeOf } from './types'
  * Default label for a brand-new bookmark.
  *
  * Resource names come from `objectContext` (requires `course_read`,
- * `module_read`, `element_read` perms — see docs/extension-apps/08-permissions.md).
+ * `module_read`, `element_read` perms — see docs/extension-apps/10-permissions.md).
  * When the name isn't available yet (the event hasn't fired, or the
  * viewport doesn't carry that resource), fall back to the viewport label.
  */
